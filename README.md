@@ -120,7 +120,7 @@
     detA = np.linalg.det(A)
     
     print("Matrix A:\n", A)
-    print("\nDeterminant of A =", round(detA, 2)
+    print("\nDeterminant of A =", round(detA, 2))
 
 # 8. Inverse of a Matrix using NumPy
 
