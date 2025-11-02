@@ -133,28 +133,48 @@ Input (code)
 Input (code)
 
     import sympy as sp
+    
     # Vectors in R3
     v1 = sp.Matrix([1, 2, 3])
     v2 = sp.Matrix([2, 4, 6])
     v3 = sp.Matrix([0, 1, 1])
+    
+    # Matrix with vectors as columns
     M = sp.Matrix.hstack(v1, v2, v3)
-    print("Matrix of vectors M:\n", M)
+    print("Matrix M:\n", M)
     
-    # Check dependence: rank < number of vectors => dependent
+    # Check linear dependence
     rank = M.rank()
-    print("Rank:", rank, "Number of vectors:", M.cols)
-    if rank < M.cols:
-        print("Vectors are linearly dependent")
-    else:
-        print("Vectors are linearly independent")
+    print("\nRank:", rank)
+    print("Number of vectors:", M.cols)
     
-    # Transition matrix: Suppose basis B = [v1, v3] and standard basis E.
-    # Coordinates of vectors of B with respect to standard basis are just columns v1,v3.
-    B = sp.Matrix.hstack(v1, v3)
-    P = B                       # Columns are coordinates in standard basis
+    if rank < M.cols:
+        print("=> Vectors are linearly dependent")
+    else:
+        print("=> Vectors are linearly independent")
+    
+    # Example linear combination c1*v1 + c2*v2 + c3*v3
+    c1, c2, c3 = sp.symbols('c1 c2 c3')
+    lin_comb = c1*v1 + c2*v2 + c3*v3
+    print("\nLinear Combination: c1*v1 + c2*v2 + c3*v3 =")
+    print(lin_comb)
+    
+    # Transition Matrix (Pick 3 independent vectors)
+    # v2 is dependent, so use v1, v3 and one standard vector e1
+    e1 = sp.Matrix([1,0,0])
+    B = sp.Matrix.hstack(v1, v3, e1)   # A valid basis for R3
+    
+    print("\nBasis matrix B:\n", B)
+    
+    # Change of basis matrix and its inverse
+    P = B
     P_inv = P.inv()
-    print("Change-of-basis matrix P (from B-coords to standard):\n", P)
-    print("P_inv (from standard to B-coords):\n", P_inv)
+    
+    print("\nChange-of-basis matrix P (B → Standard):\n", P)
+    print("\nInverse P_inv (Standard → B):\n", P_inv)
+
+    
+    
 # Q8. Find the orthonormal basis of a given vector space using the Gram-Schmidt orthogonalization process.
 Input (code)
 
